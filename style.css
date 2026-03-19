@@ -203,6 +203,7 @@ body.paper-terminal::after {
     padding: 0.38rem 0.65rem;
     font: inherit;
     letter-spacing: 0.03em;
+    justify-self: end;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
@@ -235,7 +236,6 @@ body.paper-terminal::after {
 
 .view-shell {
     padding-top: 1rem;
-    border-top: 1px dashed var(--panel-border);
 }
 
 .ascii-banner {
@@ -350,8 +350,8 @@ body.paper-terminal::after {
 }
 
 .terminal-form {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 0.9rem;
     align-items: center;
     padding-top: 0.75rem;
@@ -359,9 +359,8 @@ body.paper-terminal::after {
 }
 
 .command-input {
-    width: calc((var(--command-length, 0) + 1) * 1ch);
-    min-width: 1ch;
-    max-width: min(42ch, 100%);
+    width: 100%;
+    min-width: 0;
     border: 0;
     background: transparent;
     color: var(--text);
@@ -423,12 +422,13 @@ body.paper-terminal::after {
     }
 
     .terminal-form {
+        grid-template-columns: auto minmax(0, 1fr) auto;
         gap: 0.75rem;
         align-items: center;
     }
 
     .submit-command {
-        justify-self: start;
+        justify-self: end;
     }
 
     .ascii-banner {

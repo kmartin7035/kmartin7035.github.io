@@ -209,23 +209,6 @@ function moveCaretToEnd(element) {
     element.setSelectionRange(length, length);
 }
 
-function syncCommandInputWidth() {
-    if (!input) {
-        return;
-    }
-
-    input.style.setProperty("--command-length", String(input.value.length));
-}
-
-function setCommandInputValue(value) {
-    if (!input) {
-        return;
-    }
-
-    input.value = value;
-    syncCommandInputWidth();
-}
-
 function resetAutocompleteState() {
     autocompleteState = null;
 }
@@ -446,12 +429,12 @@ function applyTokenCompletion(context, match, appendSpace = false) {
     const nextValue = replaceInputRange(context.value, context.bounds.start, context.bounds.end, replacement);
     const nextCaret = context.bounds.start + replacement.length;
 
-    setCommandInputValue(nextValue);
+    input.value = nextValue;
     input.setSelectionRange(nextCaret, nextCaret);
 }
 
 function applyFullCommandCompletion(match) {
-    setCommandInputValue(match.value);
+    input.value = match.value;
     moveCaretToEnd(input);
 }
 
@@ -1384,7 +1367,7 @@ async function renderViewCommand(command, animated = true) {
 
 async function executeCommand(rawCommand, animated = true) {
     const normalized = normalizeInput(rawCommand);
-    setCommandInputValue("");
+    input.value = "";
     setTabHint("");
     resetAutocompleteState();
 
@@ -1473,7 +1456,7 @@ function handleTabCompletion() {
 
     if (commonPrefix && commonPrefix.length > currentValue.length) {
         if (mode === "full-command") {
-            setCommandInputValue(commonPrefix);
+            input.value = commonPrefix;
             moveCaretToEnd(input);
         } else {
             applyTokenCompletion(context, { ...matches[0], value: commonPrefix }, false);
@@ -1605,7 +1588,6 @@ if (form) {
 
 if (input) {
     input.addEventListener("input", () => {
-        syncCommandInputWidth();
         resetAutocompleteState();
         setTabHint("");
     });
@@ -1627,7 +1609,6 @@ if (input) {
 
 applySiteChrome();
 updateActivePrompt();
-syncCommandInputWidth();
 
 document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-command]");
@@ -1641,7 +1622,7 @@ document.addEventListener("click", (event) => {
         return;
     }
 
-    setCommandInputValue("");
+    input.value = "";
     setTabHint("");
     enqueueCommand(trigger.dataset.command || "--help", true);
 });
