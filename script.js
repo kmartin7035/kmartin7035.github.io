@@ -209,6 +209,23 @@ function moveCaretToEnd(element) {
     element.setSelectionRange(length, length);
 }
 
+function syncCommandInputWidth() {
+    if (!input) {
+        return;
+    }
+
+    input.style.setProperty("--command-length", String(input.value.length));
+}
+
+function setCommandInputValue(value) {
+    if (!input) {
+        return;
+    }
+
+    input.value = value;
+    syncCommandInputWidth();
+}
+
 function resetAutocompleteState() {
     autocompleteState = null;
 }
@@ -429,12 +446,12 @@ function applyTokenCompletion(context, match, appendSpace = false) {
     const nextValue = replaceInputRange(context.value, context.bounds.start, context.bounds.end, replacement);
     const nextCaret = context.bounds.start + replacement.length;
 
-    input.value = nextValue;
+    setCommandInputValue(nextValue);
     input.setSelectionRange(nextCaret, nextCaret);
 }
 
 function applyFullCommandCompletion(match) {
-    input.value = match.value;
+    setCommandInputValue(match.value);
     moveCaretToEnd(input);
 }
 
@@ -572,7 +589,7 @@ function createProtocolList() {
 function renderProtocolDirectory() {
     const group = createCommandGroup();
     group.appendChild(createProtocolList());
-    group.appendChild(createParagraph(commandSheet.protocolHint || "session ready. select a protocol above, or run --help for command index.", "protocol-note"));
+    group.appendChild(createParagraph(commandSheet.protocolHint || "session ready. click item above to view.", "protocol-note"));
     return group;
 }
 
@@ -1367,7 +1384,7 @@ async function renderViewCommand(command, animated = true) {
 
 async function executeCommand(rawCommand, animated = true) {
     const normalized = normalizeInput(rawCommand);
-    input.value = "";
+    setCommandInputValue("");
     setTabHint("");
     resetAutocompleteState();
 
@@ -1456,7 +1473,7 @@ function handleTabCompletion() {
 
     if (commonPrefix && commonPrefix.length > currentValue.length) {
         if (mode === "full-command") {
-            input.value = commonPrefix;
+            setCommandInputValue(commonPrefix);
             moveCaretToEnd(input);
         } else {
             applyTokenCompletion(context, { ...matches[0], value: commonPrefix }, false);
@@ -1567,6 +1584,15 @@ async function runBootSequence() {
 }
 
 if (form) {
+    form.addEventListener("click", (event) => {
+        if (!bootComplete || input.disabled || event.target instanceof HTMLButtonElement) {
+            return;
+        }
+
+        input.focus();
+        moveCaretToEnd(input);
+    });
+
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         if (!bootComplete || !input.value.trim()) {
@@ -1579,6 +1605,7 @@ if (form) {
 
 if (input) {
     input.addEventListener("input", () => {
+        syncCommandInputWidth();
         resetAutocompleteState();
         setTabHint("");
     });
@@ -1600,6 +1627,7 @@ if (input) {
 
 applySiteChrome();
 updateActivePrompt();
+syncCommandInputWidth();
 
 document.addEventListener("click", (event) => {
     const trigger = event.target.closest("[data-command]");
@@ -1613,7 +1641,7 @@ document.addEventListener("click", (event) => {
         return;
     }
 
-    input.value = "";
+    setCommandInputValue("");
     setTabHint("");
     enqueueCommand(trigger.dataset.command || "--help", true);
 });

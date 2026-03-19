@@ -350,32 +350,32 @@ body.paper-terminal::after {
 }
 
 .terminal-form {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.9rem;
     align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid var(--panel-border);
+    padding-top: 0.75rem;
+    cursor: text;
 }
 
 .command-input {
-    width: 100%;
-    min-width: 0;
+    width: calc((var(--command-length, 0) + 1) * 1ch);
+    min-width: 1ch;
+    max-width: min(42ch, 100%);
     border: 0;
-    border-bottom: 1px solid var(--panel-border-strong);
     background: transparent;
     color: var(--text);
-    padding: 0.6rem 0;
+    padding: 0;
     font: inherit;
+    caret-color: var(--text);
 }
 
 .command-input:focus {
     outline: none;
-    border-bottom-color: var(--text);
 }
 
 .command-input::placeholder {
-    color: var(--muted);
+    color: transparent;
 }
 
 .command-input:disabled,
@@ -423,8 +423,8 @@ body.paper-terminal::after {
     }
 
     .terminal-form {
-        grid-template-columns: 1fr;
-        align-items: stretch;
+        gap: 0.75rem;
+        align-items: center;
     }
 
     .submit-command {

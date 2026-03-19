@@ -35,8 +35,8 @@ window.authorSiteConfig = {
 ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝
         `,
         commandSheet: {
-            placeholder: "try --help, ls /protocols, or cat bio.txt",
-            protocolHint: "session ready. select a protocol above, or run --help for command index.",
+            placeholder: "",
+            protocolHint: "session ready. click item above to view.",
             emptyTabHint: "tab-complete: try --help, ls /protocols, or cat /protocols/bio.txt",
             showFunExtrasInHelp: false,
             aliases: {
