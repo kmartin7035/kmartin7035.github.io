@@ -2,51 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Author Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Author terminal</title>
+    <meta name="description" content="Interactive author terminal.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1 id="author-name"></h1>
-            <p class="subtitle" id="author-role"></p>
-        </header>
-        
-        <hr>
-        
-        <div class="static-header"></div>
-        
-        <section id="bio-section">
-            <h2>01. ABOUT</h2>
-            <p id="bio-text"></p>
-        </section>
-
-        <hr>
-
-        <section id="work">
-            <h2>02. SELECTED WORK</h2>
-            <ul class="work-list" id="work-list">
-                </ul>
-        </section>
-
-        <hr>
-
-        <section id="discord">
-            <h2>03. COMMUNITY</h2>
-            <div class="discord-box">
-                <p id="discord-text"></p>
-                <a href="#" id="discord-link" class="button">JOIN THE SERVER</a>
+<body class="paper-terminal">
+    <main class="terminal" aria-label="Interactive author terminal">
+        <header class="terminal-header">
+            <div class="window-controls" aria-hidden="true">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
             </div>
+            <p class="terminal-title" id="terminal-title"></p>
+        </header>
+
+        <section class="terminal-main" aria-label="Terminal output and input">
+            <div class="terminal-output" id="terminal-output" aria-live="polite" aria-atomic="false"></div>
+
+            <form class="terminal-form" id="terminal-form" autocomplete="off">
+                <label class="visually-hidden" for="command-input">Terminal command</label>
+                <div class="terminal-prompt" id="active-prompt" aria-hidden="true">
+                    <span class="prompt-host"></span>
+                    <span class="prompt-path"></span>
+                </div>
+                <input
+                    id="command-input"
+                    class="command-input"
+                    name="command"
+                    type="text"
+                    inputmode="text"
+                    autocapitalize="none"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    placeholder="click a protocol or type --help"
+                    disabled
+                >
+                <button class="submit-command" type="submit" disabled>run</button>
+            </form>
+            <p class="tab-hint" id="tab-hint" aria-live="polite"></p>
         </section>
+    </main>
 
-        <footer>
-            <p>&copy; <span id="footer-year"></span> <span id="footer-name"></span>. <a id="footer-email" href="#">Email Me</a>.</p>
-        </footer>
-    </div>
-
+    <script src="site-config.js"></script>
     <script src="script.js"></script>
-
 </body>
 </html>
