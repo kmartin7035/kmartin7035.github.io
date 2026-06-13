@@ -3,50 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Author terminal</title>
-    <meta name="description" content="Interactive author terminal.">
+    <title>Katherine Martin</title>
+    <meta name="description" content="Portfolio site for Katherine Martin.">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="paper-terminal">
-    <main class="terminal" aria-label="Interactive author terminal">
+    <main class="terminal" aria-label="Neon Spine terminal">
         <header class="terminal-header">
             <div class="window-controls" aria-hidden="true">
-                <span class="window-dot"></span>
-                <span class="window-dot"></span>
-                <span class="window-dot"></span>
+                <span class="window-dot window-dot--close"></span>
+                <span class="window-dot window-dot--min"></span>
+                <span class="window-dot window-dot--max"></span>
             </div>
             <p class="terminal-title" id="terminal-title"></p>
         </header>
 
-        <section class="terminal-main" aria-label="Terminal output and input">
-            <div class="terminal-output" id="terminal-output" aria-live="polite" aria-atomic="false"></div>
+        <section class="terminal-screen" aria-label="Site records">
+            <pre class="terminal-name" id="terminal-name"></pre>
 
-            <form class="terminal-form" id="terminal-form" autocomplete="off">
-                <label class="visually-hidden" for="command-input">Terminal command</label>
-                <div class="terminal-prompt" id="active-prompt" aria-hidden="true">
-                    <span class="prompt-host"></span>
-                    <span class="prompt-path"></span>
-                </div>
-                <input
-                    id="command-input"
-                    class="command-input"
-                    name="command"
-                    type="text"
-                    inputmode="text"
-                    autocapitalize="none"
-                    autocomplete="off"
-                    autocorrect="off"
-                    spellcheck="false"
-                    placeholder=""
-                    disabled
-                >
-                <button class="submit-command" type="submit" disabled>enter</button>
-            </form>
-            <p class="tab-hint" id="tab-hint" aria-live="polite"></p>
+            <div class="terminal-stage">
+                <pre class="jellyfish-art" id="jellyfish-art" aria-hidden="true"></pre>
+
+                <section class="session-column" aria-label="Guest session">
+                    <pre class="session-transcript" id="session-transcript"></pre>
+                    <pre class="welcome-box" id="welcome-box"></pre>
+
+                    <p class="prompt-line" aria-label="shell prompt">
+                        <span class="prompt-text" id="prompt-text"></span>
+                        <span class="cursor" aria-hidden="true"></span>
+                    </p>
+
+                    <p class="terminal-divider" id="terminal-divider" aria-hidden="true"></p>
+                    <nav class="record-nav" id="record-nav" aria-label="Expandable terminal records"></nav>
+                    <section class="record-panels" id="record-panels" aria-live="polite"></section>
+                </section>
+            </div>
         </section>
     </main>
 
